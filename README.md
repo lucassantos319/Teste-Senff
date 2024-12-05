@@ -23,8 +23,8 @@ Configurar um ambiente com Docker Compose para incluir toda a infraestrutura nec
 ### Interface de Mensageria
 Implementar uma interface clara e amigável para publicação e consumo de mensagens, de modo que outros desenvolvedores não precisem se preocupar com detalhes de implementação
 
-## Configuração do RabbitMQ
+### Configuração do RabbitMQ
 Preparar o pacote para realizar as operações de forma segura, com opção de configuração para ajuste dos parâmetros de conexão e retentativas.
 
-## Documentação Básica
+### Documentação Básica
 Incluir uma documentação básica do pacote com instruções de uso, descrevendo as funcionalidades e exemplos de código para facilitar a integração na aplicação de teste.
