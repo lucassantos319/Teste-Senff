@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SenffQueue.Domain\SenffQueue.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

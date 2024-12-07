@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using System.Text;
 
 namespace SenffQueue.Infrastructure.Repositories
 {
@@ -15,13 +16,34 @@ namespace SenffQueue.Infrastructure.Repositories
                 _factory = new() { HostName = url };
         }
 
-        public async void SendMessage(string message)
+        public async Task SendMessage(string message)
         {
+            try
+            {
+                if (string.IsNullOrEmpty(message))
+                    return;
+
+                var messageEncode = Encoding.UTF8.GetBytes(message);
+                using (var channel = await OpenConnectionAsync())
+                    await channel.BasicPublishAsync(exchange: string.Empty, routingKey: "messages", body: messageEncode);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.ToString()}");
+            }
         }
 
-        private async Task<IConnection> OpenConnectionAsync()
+        private async Task<IChannel> OpenConnectionAsync()
         {
-            return await _factory.CreateConnectionAsync();
+            try
+            {
+                var connection = await _factory.CreateConnectionAsync();
+                return await connection.CreateChannelAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

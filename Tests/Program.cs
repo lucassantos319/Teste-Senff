@@ -1,4 +1,10 @@
 ﻿using SenffQueue.Infrastructure.Repositories;
 
-var rabbitMq = new RabbitRepository("localhost");
-using var connection = rabbitMq.
+internal static class Program
+{
+    private static async Task Main()
+    {
+        var rabbitMq = new RabbitRepository("localhost");
+        await rabbitMq.SendMessage("Teste");
+    }
+}
