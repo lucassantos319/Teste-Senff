@@ -2,10 +2,8 @@
 {
     public interface IApplication
     {
-        public void ListingQueue();
+        public Task<IEnumerable<string>> ReceiveMessage(string queueName = null);
 
-        public Task<string> ReceiveMessage();
-
-        public Task<bool> SendMessage(string message);
+        public Task<bool> SendMessage(string message,string queueName = null);
     }
 }

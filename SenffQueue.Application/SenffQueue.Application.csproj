@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SenffQueue.Domain\SenffQueue.Domain.csproj" />
+    <ProjectReference Include="..\SenffQueue.Infrastructure\SenffQueue.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ namespace SenffQueue.Infrastructure.Repositories
         public RabbitRepository(string queueName, string url = null)
         {
             if (string.IsNullOrEmpty(queueName))
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("Queue name não preenchido");
 
             _queueName = queueName;
             if (string.IsNullOrEmpty(url))
@@ -38,7 +38,7 @@ namespace SenffQueue.Infrastructure.Repositories
                                                     autoDelete: false, arguments: null);
                 }
             }
-            catch (Exception ex) 
+            catch
             {
                 throw;
             }
@@ -97,15 +97,14 @@ namespace SenffQueue.Infrastructure.Repositories
                     await channel.BasicPublishAsync(exchange: string.Empty, routingKey: queueName ?? _queueName, body: messageEncode);
                     return true;
                 }
-
-                return false;
-
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error send message: {ex.ToString()}");
                 return false;
             }
+
+            return false;
         }
 
         private async Task<IChannel> OpenConnectionAsync()
@@ -119,6 +118,7 @@ namespace SenffQueue.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error open connection rabbitmq: {ex.ToString()}");
                 return null;
             }
         }
