@@ -1,11 +1,12 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using SenffQueue.Interfaces.Repositories;
 using System.Text;
 using System.Threading.Channels;
 
 namespace SenffQueue.Infrastructure.Repositories
 {
-    public class RabbitRepository
+    public class RabbitRepository : IRabbitRepository
     {
         private ConnectionFactory _factory;
         private string _queueName;
