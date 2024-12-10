@@ -6,7 +6,7 @@ namespace SenffQueue.Application
     public class SenffQueue : IApplication
     {
         //<summary> Repository that's communicate with rabbitmq allowing easier integration</summary>
-        public RabbitRepository _repository;
+        private RabbitRepository _repository;
 
         //<summary>Constructor of the application</summary>
         //<param name="queueName">Queue name that will be use by add and receive messages</param>
