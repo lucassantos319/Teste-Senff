@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>SenffQueue</Title>
+    <Authors>Lucas Santos</Authors>
+    <Company>Lucas Santros</Company>
+    <Product>SenffQueue</Product>
+    <AssemblyVersion>1.0.1.1</AssemblyVersion>
+    <FileVersion>1.0.1.1</FileVersion>
+    <Version>1.1.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
+  </ItemGroup>
+
+
+    <Target Name="IncludeAllFilesInTargetDir" AfterTargets="Build">
+	    <ItemGroup>
+		    <None Include="$(TargetDir)\**">
+			    <Pack>true</Pack>
+			    <PackagePath>tools</PackagePath>
+		    </None>
+	    </ItemGroup>
+    </Target>
+
+</Project>
