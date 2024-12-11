@@ -6,7 +6,7 @@ using System.Threading.Channels;
 
 namespace SenffQueue.Infrastructure.Repositories
 {
-    public class RabbitRepository : IRabbitRepository
+    internal class RabbitRepository : IRabbitRepository
     {
         private ConnectionFactory _factory;
         private string _queueName;

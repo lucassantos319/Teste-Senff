@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 
 namespace SenffQueue.Interfaces.Repositories
 {
-    public interface IRabbitRepository
+    internal interface IRabbitRepository
     {
         public Task SetQueue(string queueName);
         public Task<IEnumerable<string>> GetMessages(string queueName = null);
