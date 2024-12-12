@@ -1,19 +1,25 @@
 ﻿using SenffQueue.Domain.Interfaces.Application;
 using SenffQueue.Infrastructure.Repositories;
+using SenffQueue.Interfaces.Repositories;
 
-namespace SenffQueue.Application
+namespace SenffQueue
 {
     public class SenffQueue : IApplication
     {
         //<summary> Repository that's communicate with rabbitmq allowing easier integration</summary>
-        private RabbitRepository _repository;
+        private static IRabbitRepository _repository;
+
+        public static async Task<SenffQueue> BuildQueue(string queueName,string url = "localhost",int qtyFetch = 100)
+        {
+            var repository = await RabbitRepository.BuildRepository(queueName,url, qtyFetch);
+            return new SenffQueue(repository,queueName);
+        }
 
         //<summary>Constructor of the application</summary>
         //<param name="queueName">Queue name that will be use by add and receive messages</param>
-        public SenffQueue(string queueName)
+        private SenffQueue(IRabbitRepository repository, string queueName)
         {
-            if ( _repository == null ) 
-                _repository = new(queueName);
+            _repository = repository;
         }
 
         //<summary>Create a new queue</summary>
@@ -36,11 +42,11 @@ namespace SenffQueue.Application
         //<summary>Function that's allow the receive of messages from a certain queue or default queue set in constructor</summary>
         //<param name="queueName"> Specify certain queue to get the messages</param>
         //<return>Return a range of 100 messages of the queue</return>
-        public async Task<IEnumerable<string>> ReceiveMessage(string queueName = null)
+        public async Task<IEnumerable<string>> ReceiveMessage(string queueName = null, ushort prefetchCount = 100)
         {
             try
             {
-                var queueMessages = await _repository.GetMessages(queueName);
+                var queueMessages = await _repository.GetMessages(queueName,prefetchCount);
                 if (queueMessages == null || !queueMessages.Any())
                     return null;
 
@@ -60,8 +66,7 @@ namespace SenffQueue.Application
         {
             try
             {
-                await _repository.SendMessage(message, queueName);
-                return true;
+                return await _repository.SendMessage(message, queueName);
             }
             catch 
             {

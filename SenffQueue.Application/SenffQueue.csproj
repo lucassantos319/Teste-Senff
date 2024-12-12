@@ -11,12 +11,8 @@
     <Product>SenffQueue</Product>
     <AssemblyVersion>1.0.1.1</AssemblyVersion>
     <FileVersion>1.0.1.1</FileVersion>
-    <Version>1.1.2</Version>
+    <Version>1.3.3</Version>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
-  </ItemGroup>
 
 
     <Target Name="IncludeAllFilesInTargetDir" AfterTargets="Build">
@@ -27,5 +23,10 @@
 		    </None>
 	    </ItemGroup>
     </Target>
+
+
+    <ItemGroup>
+      <PackageReference Include="RabbitMQ.Client" Version="7.0.0" />
+    </ItemGroup>
 
 </Project>

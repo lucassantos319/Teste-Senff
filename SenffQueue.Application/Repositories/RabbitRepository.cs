@@ -6,7 +6,7 @@ using System.Threading.Channels;
 
 namespace SenffQueue.Infrastructure.Repositories
 {
-    public class RabbitRepository : IRabbitRepository
+    internal class RabbitRepository 
     {
         private ConnectionFactory _factory;
         private string _queueName;
@@ -71,7 +71,7 @@ namespace SenffQueue.Infrastructure.Repositories
                     await channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
                 };
                 
-                await channel.BasicConsumeAsync(queueName ?? _queueName, autoAck: false, consumer: consumer);
+                await channel.BasicConsumeAsync(queueName ?? _queueName, autoAck: true, consumer: consumer);
             }
 
             return messages;
