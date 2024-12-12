@@ -9,9 +9,9 @@ namespace SenffQueue
         //<summary> Repository that's communicate with rabbitmq allowing easier integration</summary>
         private static IRabbitRepository _repository;
 
-        public static async Task<SenffQueue> BuildQueue(string queueName,string url = "localhost")
+        public static async Task<SenffQueue> BuildQueue(string queueName,string url = "localhost",int qtyFetch = 100)
         {
-            var repository = await RabbitRepository.BuildRepository(queueName,url);
+            var repository = await RabbitRepository.BuildRepository(queueName,url, qtyFetch);
             return new SenffQueue(repository,queueName);
         }
 
@@ -42,11 +42,11 @@ namespace SenffQueue
         //<summary>Function that's allow the receive of messages from a certain queue or default queue set in constructor</summary>
         //<param name="queueName"> Specify certain queue to get the messages</param>
         //<return>Return a range of 100 messages of the queue</return>
-        public async Task<IEnumerable<string>> ReceiveMessage(string queueName = null)
+        public async Task<IEnumerable<string>> ReceiveMessage(string queueName = null, ushort prefetchCount = 100)
         {
             try
             {
-                var queueMessages = await _repository.GetMessages(queueName);
+                var queueMessages = await _repository.GetMessages(queueName,prefetchCount);
                 if (queueMessages == null || !queueMessages.Any())
                     return null;
 
