@@ -71,6 +71,7 @@ namespace SenffQueue.Infrastructure.Repositories
             var messages = new List<string>();
           
             await _channel.BasicQosAsync(prefetchSize: 0, prefetchCount: prefetchCount, global: false);
+            
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += async (model, ea) =>
             {
@@ -80,8 +81,8 @@ namespace SenffQueue.Infrastructure.Repositories
                 await _channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false);
             };
                 
-            await _channel.BasicConsumeAsync(queueName ?? _queueName, autoAck: true, consumer: consumer);
-
+            await _channel.BasicConsumeAsync(queueName ?? _queueName, autoAck: false, consumer: consumer);
+            await Task.Delay(5000);
             return messages;
         }
 
